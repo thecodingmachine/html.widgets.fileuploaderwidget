@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package>
+	<displayName>File Uploader Widget</displayName>
+	<shortDescription>This package contains an upload widget based on File Uploader plugin.
+	This allows easy uploading of files in AJAX or HTML5.</shortDescription>
+	<docUrl></docUrl>
+	<doc root='doc'>
+		<page title="Using the File Uploader Widget" url="index.html" />
+	</doc>	
+	<dependencies>
+		<dependency>
+			<group>javascript</group>
+			<name>fileUploader</name>
+			<version>>=1.0</version>
+		</dependency>
+		<dependency>
+			<group>html</group>
+			<name>htmlelement</name>
+			<version>>=1.0</version>
+		</dependency>
+		<dependency>
+			<group>utils/session</group>
+			<name>sessionmanager</name>
+			<version>&gt;=1.0</version>
+		</dependency>
+		<dependency>
+			<group>utils/common</group>
+			<name>getvars</name>
+			<version>&gt;=1.0</version>
+		</dependency>
+	</dependencies>
+	<requires>
+		<require>FileUploaderOnUploadInterface.php</require>
+		<require>FileUploaderWidget.php</require>
+		<require>direct/JsUploadFile.php</require>
+		<require>SimpleFileUploaderWidget.php</require>
+	</requires>
+</package>
