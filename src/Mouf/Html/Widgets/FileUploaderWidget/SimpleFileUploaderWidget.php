@@ -1,4 +1,5 @@
 <?php
+namespace Mouf\Html\Widgets\FileUploaderWidget;
 
 /**
  * This class extends FileUploaderWidget.
@@ -6,6 +7,8 @@
  *
  * @Component
  */
+use Mouf\MoufException;
+
 class SimpleFileUploaderWidget extends FileUploaderWidget {
 
 	/**

@@ -1,10 +1,15 @@
 <?php
+namespace Mouf\Html\Widgets\FileUploaderWidget;
 
 /**
  * This class represent an HTML/Flash file upload widget enabling the upload of a single file.
  *
  * @Component
  */
+use Mouf\MoufManager;
+
+use Mouf\Html\HtmlElement\HtmlElementInterface;
+
 class FileUploaderWidget implements HtmlElementInterface {
 		
 	/**
@@ -239,7 +244,7 @@ class FileUploaderWidget implements HtmlElementInterface {
 		echo '<script type="text/javascript">
 				 var uploader'.self::$count.' = new qq.FileUploader({
 			        element: document.getElementById("'.plainstring_to_htmlprotected($id).'"),
-			        action: "'.ROOT_URL.'plugins/html/widgets/fileUploaderWidget/'.$version.'/direct/upload.php",
+			        action: "'.ROOT_URL.'vendor/mouf/html.widgets.fileuploaderwidget/src/direct/upload.php",
 					params: '.json_encode($scriptDataArray);
 		foreach ($fileUploaderParam as $key => $value) {
 			echo ','.$key.':'.$value;

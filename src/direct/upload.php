@@ -1,6 +1,7 @@
 <?php
+use Mouf\MoufManager;
 
-require_once dirname(__FILE__)."/../../../../../../Mouf.php";
+require_once JsUploadFile.php;
 
 Mouf::getSessionManager()->start();
 

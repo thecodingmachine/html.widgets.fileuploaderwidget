@@ -1,4 +1,5 @@
 <?php
+namespace Mouf\Html\Widgets\FileUploaderWidget;
 
 /**
  * Classes implementing the UploadifyOnUploadInterface interface can be notified when a file is uploaded through a UploadifySingleFileWidget.
