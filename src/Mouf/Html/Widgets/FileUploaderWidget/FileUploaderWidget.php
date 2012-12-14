@@ -254,7 +254,8 @@ class FileUploaderWidget implements HtmlElementInterface {
 				</script>';
 		
 		// Start a session using the session manager.
-		Mouf::getSessionManager()->start();
+		$moufManager = MoufManager::getMoufManager();
+		$moufManager->getInstance('sessionManager')->start();
 		$_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId] = array("path"=>$this->getFileUploadPath(),
 																		"fileId"=>$this->fileId,
 																		"instanceName"=>$thisInstanceName);
@@ -289,7 +290,8 @@ class FileUploaderWidget implements HtmlElementInterface {
 	 */
 	public function getParams($uniqueId) {
 		// Start a session using the session manager.
-		Mouf::getSessionManager()->start();
+		$moufManager = MoufManager::getMoufManager();
+		$moufManager->getInstance('sessionManager')->start();
 		if(isset($_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId]['params']))
 			return unserialize($_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId]['params']);
 		else
