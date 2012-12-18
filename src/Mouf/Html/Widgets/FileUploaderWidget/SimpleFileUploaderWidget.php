@@ -7,6 +7,8 @@ namespace Mouf\Html\Widgets\FileUploaderWidget;
  *
  * @Component
  */
+use Mouf\MoufManager;
+
 use Mouf\MoufException;
 
 class SimpleFileUploaderWidget extends FileUploaderWidget {
@@ -77,6 +79,49 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 	}
 	
 	/**
+	 * Return an HTML string to render the object
+	 *
+	 */
+	public function returnHtmlString() {
+		// Retrieve static value in parent to display a single element by function call
+		$count = parent::$count + 1;
+	
+		if(!$this->inputName)
+			throw new MoufException('Please add a input name in your instance of SimpleFileUploaderWidget');
+	
+		$html = '<script type="text/javascript">';
+		// Add JS to save the temp folder
+		$html .= 'function simpleFileUploadWidgetOnComplete_'.$this->inputName.'_'.$count.'(id, fileName, responseJSON) {
+		document.getElementById("'.$this->inputName.'").value = responseJSON.targetFolder;
+		'.($this->onComplete?$this->onComplete.'(id, fileName, responseJSON);':'').'
+	}';
+		// Add JS if only one file can be send. This remove the upload list
+		if($this->onlyOneFile) {
+			$html .= 'function simpleFileUploadWidgetOnSubmit_'.$this->inputName.'_'.$count.'(id, fileName) {
+			document.getElementById("mouf_fileupload_'.$count.'").getElementsByTagName("div")[0].getElementsByTagName("ul")[0].innerHTML = "";
+		}';
+		}
+		$html .= '</script>';
+	
+		// Add listener
+		$this->onComplete = 'simpleFileUploadWidgetOnComplete_'.$this->inputName.'_'.$count;
+		if($this->onlyOneFile)
+			$this->onSubmit = 'simpleFileUploadWidgetOnSubmit_'.$this->inputName.'_'.$count;
+	
+		// Add hidden input
+		$html .= '<input type="hidden" name="'.$this->inputName.'" value="" id ="'.$this->inputName.'" />';
+	
+		// Save parameters to retrieve data in ajax call back
+		$this->addParams(array('input' => $this->inputName, 'random' => time().rand(1,9999999)));
+	
+	
+		// Call parent returnHtmlString
+		$html .= parent::returnHtmlString();
+		
+		return $html;
+	}
+	
+	/**
 	 * Call all listener before upload file.
 	 *
 	 * @param string $targetFile The final path of the uploaded file. When the afterUpload method is called, the file is there.
@@ -86,7 +131,10 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 	 * @param string $uniqueId Unique id of file uploader form.
 	 */
 	public function triggerBeforeUpload(&$targetFile, &$fileName, $fileId, array &$returnArray, $uniqueId) {
-		Mouf::getSessionManager()->start();
+		$moufManager = MoufManager::getMoufManager();
+		$moufManager->getInstance('sessionManager')->start();
+		
+		$parameters = $this->getParams($uniqueId); //ADD
 		
 		// Retrieve temp folder to save file uploaded
 		if(isset($_SESSION["mouf_simplefileupload_folder"][$parameters['input'].$parameters['random']]))

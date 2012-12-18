@@ -1,9 +1,11 @@
 <?php
+use Mouf\Html\Widgets\FileUploaderWidget\JsFileUploader;
 use Mouf\MoufManager;
 
-require_once JsUploadFile.php;
+require_once '../../../../../mouf/Mouf.php';
 
-Mouf::getSessionManager()->start();
+$moufManager = MoufManager::getMoufManager();
+$moufManager->getInstance('sessionManager')->start();
 
 $uniqueId = $_REQUEST['uniqueId'];
 
@@ -23,7 +25,7 @@ if (empty($sessArray['instanceName'])) {
 	echo json_encode($returnArray);
 	exit;
 }
-$instance = MoufManager::getMoufManager()->getInstance($sessArray['instanceName']);
+$instance = $moufManager->getInstance($sessArray['instanceName']);
 		
 if(!is_array($_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId])){
 	$returnArray['error'] = 'session error';
