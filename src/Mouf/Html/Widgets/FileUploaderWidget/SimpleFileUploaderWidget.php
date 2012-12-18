@@ -93,8 +93,12 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 		// Add JS to save the temp folder
 		$html .= 'function simpleFileUploadWidgetOnComplete_'.$this->inputName.'_'.$count.'(id, fileName, responseJSON) {
 		document.getElementById("'.$this->inputName.'").value = responseJSON.targetFolder;
-		'.($this->onComplete?$this->onComplete.'(id, fileName, responseJSON);':'').'
-	}';
+		}';
+		
+		//REMOVE TO HAVE MULTIPLE UPLOADER ON THE SAME PAGE => PIERRE
+		//.($this->onComplete?$this->onComplete.'(id, fileName, responseJSON);':'').'
+		
+		
 		// Add JS if only one file can be send. This remove the upload list
 		if($this->onlyOneFile) {
 			$html .= 'function simpleFileUploadWidgetOnSubmit_'.$this->inputName.'_'.$count.'(id, fileName) {
@@ -143,6 +147,9 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 			$folderName = time().rand(1, 9999999);
 			$_SESSION["mouf_simplefileupload_folder"][$parameters['input'].$parameters['random']] = $folderName;
 		}
+		
+		//ADD TO HAVE MULTIPLE UPLOADER ON THE SAME PAGE => PIERRE
+		$folderName = $folderName.'_'.$fileId;
 		
 		// Temp folder
 		$sysFolder = sys_get_temp_dir();
