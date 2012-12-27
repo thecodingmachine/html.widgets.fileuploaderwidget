@@ -42,40 +42,7 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 	 *
 	 */
 	public function toHtml() {
-		// Retrieve static value in parent to display a single element by function call
-		$count = parent::$count + 1;
-		
-		if(!$this->inputName)
-			throw new MoufException('Please add a input name in your instance of SimpleFileUploaderWidget');
-		
-		echo '<script type="text/javascript">';
-		// Add JS to save the temp folder
-		echo 'function simpleFileUploadWidgetOnComplete_'.$this->inputName.'_'.$count.'(id, fileName, responseJSON) {
-				document.getElementById("'.$this->inputName.'").value = responseJSON.targetFolder;
-				'.($this->onComplete?$this->onComplete.'(id, fileName, responseJSON);':'').'
-				}';
-		// Add JS if only one file can be send. This remove the upload list
-		if($this->onlyOneFile) {
-			echo 'function simpleFileUploadWidgetOnSubmit_'.$this->inputName.'_'.$count.'(id, fileName) {
-						document.getElementById("mouf_fileupload_'.$count.'").getElementsByTagName("div")[0].getElementsByTagName("ul")[0].innerHTML = "";
-					}';
-		}
-		echo '</script>';
-		
-		// Add listener
-		$this->onComplete = 'simpleFileUploadWidgetOnComplete_'.$this->inputName.'_'.$count;
-		if($this->onlyOneFile)
-			$this->onSubmit = 'simpleFileUploadWidgetOnSubmit_'.$this->inputName.'_'.$count;
-		
-		// Add hidden input
-		echo '<input type="hidden" name="'.$this->inputName.'" value="" id ="'.$this->inputName.'" />';
-		
-		// Save parameters to retrieve data in ajax call back
-		$this->addParams(array('input' => $this->inputName, 'random' => time().rand(1,9999999)));
-		
-		
-		// Call parent toHtml
-		parent::toHtml();
+		echo $this->returnHtmlString();
 	}
 	
 	/**
@@ -94,10 +61,9 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 		$html .= 'function simpleFileUploadWidgetOnComplete_'.$this->inputName.'_'.$count.'(id, fileName, responseJSON) {
 		document.getElementById("'.$this->inputName.'").value = responseJSON.targetFolder;
 		}';
+
 		
-		//REMOVE TO HAVE MULTIPLE UPLOADER ON THE SAME PAGE => PIERRE
-		//.($this->onComplete?$this->onComplete.'(id, fileName, responseJSON);':'').'
-		
+		$html .= ($this->onComplete?$this->onComplete.'(id, fileName, responseJSON);':'');
 		
 		// Add JS if only one file can be send. This remove the upload list
 		if($this->onlyOneFile) {
@@ -148,7 +114,6 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 			$_SESSION["mouf_simplefileupload_folder"][$parameters['input'].$parameters['random']] = $folderName;
 		}
 		
-		//ADD TO HAVE MULTIPLE UPLOADER ON THE SAME PAGE => PIERRE
 		$folderName = $folderName.'_'.$fileId;
 		
 		// Temp folder
