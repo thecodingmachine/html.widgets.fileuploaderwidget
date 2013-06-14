@@ -13,6 +13,11 @@ $sessArray = array("path"=>$_REQUEST['path'],
 					"fileId"=>$_REQUEST['fileId'],
 					"instanceName"=>$_REQUEST['instanceName']);
 
+foreach ($sessArray as $key => $value) {
+	if($value == 'null')
+		$sessArray[$key] = null;
+}
+
 $targetFile = $sessArray["path"];
 $fileName = '';
 if(isset($_REQUEST['fileName'])) {
@@ -32,11 +37,15 @@ if(!is_array($_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId])){
 	echo json_encode($returnArray);
 	exit;
 }
-$diff = array_diff($sessArray, $_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId]);
-if(count($diff)){
-	$returnArray['error'] = 'session not match';
-	echo json_encode($returnArray);
-	exit;
+
+// Check if there is difference between form and session
+foreach ($sessArray as $key => $value) {
+	if((string)$_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId][$key] != $value) {
+		echo $key.' - '.$value.'!='.$_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId][$key];
+		$returnArray['error'] = 'session not match';
+		echo json_encode($returnArray);
+		exit;
+	}
 }
 
 $targetPath = dirname($targetFile);

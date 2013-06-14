@@ -63,7 +63,7 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 		}';
 
 		
-		$html .= ($this->onComplete?$this->onComplete.'(id, fileName, responseJSON);':'');
+		//$html .= ($this->onComplete?$this->onComplete.'':'');
 		
 		// Add JS if only one file can be send. This remove the upload list
 		if($this->onlyOneFile) {
@@ -82,9 +82,7 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 		$html .= '<input type="hidden" name="'.$this->inputName.'" value="" id ="'.$this->inputName.'" />';
 	
 		// Save parameters to retrieve data in ajax call back
-		$this->addParams(array('input' => $this->inputName, 'random' => time().rand(1,9999999)));
-	
-	
+		$this->addParams(array('input' => $this->inputName, 'random' => time().rand(1,9999999), 'onlyOneFile' => $this->onlyOneFile));
 		// Call parent returnHtmlString
 		$html .= parent::returnHtmlString();
 		
@@ -105,6 +103,7 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 		$moufManager->getInstance('sessionManager')->start();
 		
 		$parameters = $this->getParams($uniqueId); //ADD
+		$this->onlyOneFile = $parameters['onlyOneFile']; //ADD
 		
 		// Retrieve temp folder to save file uploaded
 		if(isset($_SESSION["mouf_simplefileupload_folder"][$parameters['input'].$parameters['random']]))
@@ -173,7 +172,7 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 		if(!is_dir($folderDest)) {
 			mkdir($folderDest, 0777, true);
 		}
-		
+		echo $folderDest;
 		// retrieve value of input
 		if($inputName)
 			$values = get($inputName);
