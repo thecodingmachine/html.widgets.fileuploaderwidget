@@ -24,26 +24,25 @@
         "psr-0": {
             "Mouf": "src/"
         }
-    }
-	 "extra": {
-	    "mouf": {
-	    	"install": [
-		    	{
-		    		"type": "file",
-		    		"file": "src/install.php"
-		    	}
-	    	],
-	    	"doc": [
-	    		{
-	    			"title": "Install",
-	    			"url": "doc/install.md"
-	    		},
-	    		{
-	    			"title": "Tutorial",
-	    			"url": "doc/tutorial.md"
-	    		}
-	    	]
-	    	
-	    }
+    },
+	"extra": {
+		"mouf": {
+			"install": [
+				{
+					"type": "file",
+					"file": "src/install.php"
+				}
+			],
+			"doc": [
+				{
+					"title": "Install",
+					"url": "doc/install.md"
+				},
+				{
+					"title": "Tutorial",
+					"url": "doc/tutorial.md"
+				}
+			]
+		}
 	}
 }
