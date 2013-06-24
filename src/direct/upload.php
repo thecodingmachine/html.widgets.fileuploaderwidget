@@ -19,6 +19,7 @@ foreach ($sessArray as $key => $value) {
 }
 
 $targetFile = $sessArray["path"];
+error_log($targetFile);
 $fileName = '';
 if(isset($_REQUEST['fileName'])) {
 	$fileName = $_REQUEST['fileName'];
@@ -41,7 +42,7 @@ if(!is_array($_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId])){
 // Check if there is difference between form and session
 foreach ($sessArray as $key => $value) {
 	if((string)$_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId][$key] != $value) {
-		echo $key.' - '.$value.'!='.$_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId][$key];
+// 		echo $key.' - '.$value.'!='.$_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId][$key];
 		$returnArray['error'] = 'session not match';
 		echo json_encode($returnArray);
 		exit;
@@ -80,7 +81,7 @@ if (!is_dir($targetFile)) {
 	mkdir(str_replace('//','/', $targetFile), 0755, true);
 }
 if (!isset($returnArray['error'])) {
-	
+	error_log($fileName);
 	$returnUpload = $uploader->handleUpload($targetFile, $fileName, $instance->replace);
 	$targetFile = $uploader->getFileSave(true);
 	if (!$returnUpload) {

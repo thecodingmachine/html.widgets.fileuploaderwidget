@@ -105,6 +105,7 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 		$parameters = $this->getParams($uniqueId); //ADD
 		$this->onlyOneFile = $parameters['onlyOneFile']; //ADD
 		
+		/*
 		// Retrieve temp folder to save file uploaded
 		if(isset($_SESSION["mouf_simplefileupload_folder"][$parameters['input'].$parameters['random']]))
 			$folderName = $_SESSION["mouf_simplefileupload_folder"][$parameters['input'].$parameters['random']];
@@ -112,8 +113,9 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 			$folderName = time().rand(1, 9999999);
 			$_SESSION["mouf_simplefileupload_folder"][$parameters['input'].$parameters['random']] = $folderName;
 		}
+		*/
 		
-		$folderName = $folderName.'_'.$fileId;
+		$folderName = $uniqueId.'_'.$fileId;
 		
 		// Temp folder
 		$sysFolder = sys_get_temp_dir();
@@ -172,7 +174,7 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 		if(!is_dir($folderDest)) {
 			mkdir($folderDest, 0777, true);
 		}
-		echo $folderDest;
+		//echo $folderDest;
 		// retrieve value of input
 		if($inputName)
 			$values = get($inputName);

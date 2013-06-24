@@ -207,7 +207,7 @@ class FileUploaderWidget implements HtmlElementInterface {
 	
 		$version = basename(dirname(__FILE__));
 	
-		$uniqueId = rand();
+		$uniqueId = date('YmdHis').rand(0, 9999999);
 		$moufManager = MoufManager::getMoufManager();
 		$moufManager->findInstanceName($this);
 		$thisInstanceName = $moufManager->findInstanceName($this);
