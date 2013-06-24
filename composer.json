@@ -27,12 +27,6 @@
     },
 	"extra": {
 		"mouf": {
-			"install": [
-				{
-					"type": "file",
-					"file": "src/install.php"
-				}
-			],
 			"doc": [
 				{
 					"title": "Install",
