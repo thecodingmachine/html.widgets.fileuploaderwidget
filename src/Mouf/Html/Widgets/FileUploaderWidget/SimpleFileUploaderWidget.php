@@ -60,6 +60,7 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 		// Add JS to save the temp folder
 		$html .= 'function simpleFileUploadWidgetOnComplete_'.$this->inputName.'_'.$count.'(id, fileName, responseJSON) {
 		document.getElementById("'.$this->inputName.'").value = responseJSON.targetFolder;
+		'.($this->onComplete?$this->onComplete.'(id, fileName, responseJSON);':'').'
 		}';
 
 		
@@ -69,6 +70,7 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 		if($this->onlyOneFile) {
 			$html .= 'function simpleFileUploadWidgetOnSubmit_'.$this->inputName.'_'.$count.'(id, fileName) {
 			document.getElementById("mouf_fileupload_'.$count.'").getElementsByTagName("div")[0].getElementsByTagName("ul")[0].innerHTML = "";
+			'.($this->onSubmit?$this->onSubmit.'(id, fileName);':'').'
 		}';
 		}
 		$html .= '</script>';

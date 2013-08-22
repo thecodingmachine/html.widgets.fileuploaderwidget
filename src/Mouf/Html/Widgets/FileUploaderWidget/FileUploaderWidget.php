@@ -271,8 +271,9 @@ class FileUploaderWidget implements HtmlElementInterface {
 		$_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId] = array("path"=>$this->getFileUploadPath(),
 				"fileId"=>$this->fileId,
 				"instanceName"=>$thisInstanceName);
+		if($this->params === null)
+			$this->params = array();
 		$_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId]['params'] = serialize($this->params);
-		
 		return $html;
 	}
 	
@@ -309,7 +310,7 @@ class FileUploaderWidget implements HtmlElementInterface {
 		if(isset($_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId]['params']))
 			return unserialize($_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId]['params']);
 		else
-			return null;
+			return array();
 	}
 	
 	/**
