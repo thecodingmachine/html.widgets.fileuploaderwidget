@@ -4,14 +4,18 @@ use Mouf\MoufManager;
 
 require_once '../../../../../mouf/Mouf.php';
 
+if (!defined('ROOT_URL') && function_exists('apache_getenv')) {
+	define('ROOT_URL', apache_getenv("BASE")."/../../../../../");
+}
+
 $moufManager = MoufManager::getMoufManager();
 $moufManager->getInstance('sessionManager')->start();
 
 $uniqueId = $_REQUEST['uniqueId'];
 
 $sessArray = array("path"=>$_REQUEST['path'],
-					"fileId"=>$_REQUEST['fileId'],
-					"instanceName"=>$_REQUEST['instanceName']);
+		"fileId"=>$_REQUEST['fileId'],
+		"instanceName"=>$_REQUEST['instanceName']);
 
 foreach ($sessArray as $key => $value) {
 	if($value == 'null')
@@ -32,7 +36,7 @@ if (empty($sessArray['instanceName'])) {
 	exit;
 }
 $instance = $moufManager->getInstance($sessArray['instanceName']);
-		
+
 if(!is_array($_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId])){
 	$returnArray['error'] = 'session error';
 	echo json_encode($returnArray);
@@ -42,7 +46,7 @@ if(!is_array($_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId])){
 // Check if there is difference between form and session
 foreach ($sessArray as $key => $value) {
 	if((string)$_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId][$key] != $value) {
-// 		echo $key.' - '.$value.'!='.$_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId][$key];
+		// 		echo $key.' - '.$value.'!='.$_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId][$key];
 		$returnArray['error'] = 'session not match';
 		echo json_encode($returnArray);
 		exit;
