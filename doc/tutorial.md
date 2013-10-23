@@ -19,12 +19,13 @@ Next, set the parameters :
 
 
 Others parameters are mandatory. The most important:
- - OnlyOneFile: If you want to send only 1 file (many by default);
+ - OnlyOneFile: If you want to send only 1 file (many by default). This delete the file contain in the destination folder to store only one. Note: it's not a graphic parameter;
+ - noTemporary : You can activate it to don't send the file in the temporary folder. The file is saved in the destination folder;
  - fileExtensions: Limit the extension name of file send;
  - sizeLimit: The max size of file in byte;
  - minSizeLimit: The min size of file in byte;
  - fileName: To rename the file with a name;
- - multiple: authorize the user to send many file in 1 time (by drag & drop or explorer).
+ - multiple: authorize the user to send many file in 1 time (by drag & drop or explorer). Note: It's only a graphic parameter.
 
 ![File Upload instance](https://raw.github.com/thecodingmachine/html.widgets.fileuploaderwidget/2.0/doc/images/instance.png)
 
