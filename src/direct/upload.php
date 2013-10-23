@@ -23,7 +23,7 @@ foreach ($sessArray as $key => $value) {
 }
 
 $targetFile = $sessArray["path"];
-error_log($targetFile);
+
 $fileName = '';
 if(isset($_REQUEST['fileName'])) {
 	$fileName = $_REQUEST['fileName'];
@@ -76,16 +76,16 @@ if(!$fileName) {
 	else
 		$fileName = $uploader->getFileName();
 }
-
 /* @var $instance FileUploaderWidget */
 // Call listener Before
+
 $instance->triggerBeforeUpload($targetFile, $fileName, $sessArray["fileId"], $returnArray, $uniqueId);
 
 if (!is_dir($targetFile)) {
 	mkdir(str_replace('//','/', $targetFile), 0755, true);
 }
+
 if (!isset($returnArray['error'])) {
-	error_log($fileName);
 	$returnUpload = $uploader->handleUpload($targetFile, $fileName, $instance->replace);
 	$targetFile = $uploader->getFileSave(true);
 	if (!$returnUpload) {

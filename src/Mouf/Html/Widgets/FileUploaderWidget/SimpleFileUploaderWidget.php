@@ -35,6 +35,14 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 	 * @var bool
 	 */
 	public $onlyOneFile = false;
+
+	/**
+	 * This parameter is used to don't save the upload file in the temporary directory, but directly in folder set in "folder" parameter.
+	 * By default it's false.
+	 *
+	 * @var boolean
+	 */
+	public $noTemporarySave = false;
 	
 	/**
 	 * Renders the object in HTML.
@@ -52,7 +60,6 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 	public function returnHtmlString() {
 		// Retrieve static value in parent to display a single element by function call
 		$count = parent::$count + 1;
-	
 		if(!$this->inputName)
 			throw new MoufException('Please add a input name in your instance of SimpleFileUploaderWidget');
 	
@@ -118,12 +125,17 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 		*/
 		
 		$folderName = $uniqueId.'_'.$fileId;
+		if(!$this->noTemporarySave) {
+			// Temp folder
+			$sysFolder = sys_get_temp_dir();
+			if(strrpos($sysFolder, '/') != (strlen($sysFolder) - 1))
+				$sysFolder = $sysFolder.'/';
 		
-		// Temp folder
-		$sysFolder = sys_get_temp_dir();
-		if(strrpos($sysFolder, '/') != (strlen($sysFolder) - 1))
-			$sysFolder = $sysFolder.'/';
-		$this->directory = $sysFolder.'simplefileupload/'.$folderName.'/';
+			$this->directory = $sysFolder.'simplefileupload/'.$folderName.'/';
+		}
+		else {
+			$this->directory = $targetFile;
+		}
 		// If only one file can be send, remove other file in temp file
 		if($this->onlyOneFile) {
 			if(is_dir($this->directory)) {
@@ -138,7 +150,6 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 		}
 		// Change target in FileUploaderWidget
 		$targetFile = $this->directory;
-		
 		// Add to return value in JS
 		$returnArray['targetFolder']=$folderName;
 		
