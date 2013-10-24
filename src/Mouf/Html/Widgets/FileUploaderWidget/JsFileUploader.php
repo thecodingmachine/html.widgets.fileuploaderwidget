@@ -57,7 +57,7 @@ class JsFileUploader {
     /**
      * Returns array('success'=>true) or array('error'=>'error message')
      */
-    function handleUpload($uploadDirectory, $fileName = null, $replaceOldFile = FALSE){
+    function handleUpload($uploadDirectory, $fileName = null, $replaceOldFile = false){
         if (!is_writable($uploadDirectory)){
             return array('error' => "Server error. Upload directory isn't writable.");
         }
@@ -95,7 +95,7 @@ class JsFileUploader {
         if(!$replaceOldFile){
             /// don't overwrite previous files that were uploaded
             while (file_exists($uploadDirectory . $filename . '.' . $ext)) {
-                $filename .= '_'.rand(1, 100000);
+                $filename .= '_'.date('YmdHis').rand(1, 100000);
             }
         }
         
