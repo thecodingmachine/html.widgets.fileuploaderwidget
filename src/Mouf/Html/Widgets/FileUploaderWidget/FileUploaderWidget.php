@@ -105,6 +105,7 @@ class FileUploaderWidget implements HtmlElementInterface {
 	/**
 	 * Replace the other file if they has the same folder and name.
 	 * If disabled the file is renamed with _ and random number.
+	 * By default replace is true
 	 * 
 	 * @Property
 	 * @var boolean

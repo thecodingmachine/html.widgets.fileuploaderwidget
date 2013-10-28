@@ -124,7 +124,7 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 		}
 		*/
 		
-		$folderName = $uniqueId.'_'.$fileId;
+		$folderName = $uniqueId;//.'_'.$fileId;
 		if(!$this->noTemporarySave) {
 			// Temp folder
 			$sysFolder = sys_get_temp_dir();
@@ -157,6 +157,22 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 	}
 	
 
+
+	/**
+	 * Call all listener after upload file.
+	 *
+	 * @param string $targetFile The final path of the uploaded file. When the afterUpload method is called, the file is there.
+	 * @param string $fileId The fileId that was set in the uploadify widget (see FileUploadWidget::fileId)
+	 * @param array $result The result array that will be returned to the page as a JSON object.
+	 * @param string $uniqueId Unique id of file uploader form.
+	 */
+	public function triggerAfterUpload(&$targetFile, $fileId, array &$returnArray, $uniqueId) {
+		$file = substr($targetFile, strpos($targetFile, ROOT_PATH) + strlen(ROOT_PATH));
+		$_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId]['files'][] = $file;
+
+		parent::triggerAfterUpload($targetFile, $fileId, $returnArray, $uniqueId);
+	}
+	
 	/**
 	 * If you want move the file in afterUpload function, you haven't the input here.
 	 * Please retrieve the targetFolder parameter in result variable and set it.
