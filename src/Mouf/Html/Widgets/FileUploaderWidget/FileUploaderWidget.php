@@ -177,6 +177,39 @@ class FileUploaderWidget implements HtmlElementInterface {
 	 */
 	public $showMessage;
 	
+
+	/**
+	 * Text display by default on the file upload buttom
+	 *
+	 * @Property
+	 * @var string
+	 */
+	public $textDefault;
+
+	/**
+	 * Text display on hover of the file upload buttom
+	 *
+	 * @Property
+	 * @var string
+	 */
+	public $textHover;
+
+	/**
+	 * Text display to cancel the upload
+	 *
+	 * @Property
+	 * @var string
+	 */
+	public $textCancel;
+
+	/**
+	 * Text display when the file failed
+	 *
+	 * @Property
+	 * @var string
+	 */
+	public $textFailed;
+	
 	/**
 	 * If you want to add parameter to your application
 	 * The parameters must be serializable, to be saved in SESSION
@@ -258,8 +291,20 @@ class FileUploaderWidget implements HtmlElementInterface {
 		$html .= '<script type="text/javascript">
 		var uploader'.self::$count.' = new qq.FileUploader({
 		element: document.getElementById("'.plainstring_to_htmlprotected($id).'"),
-		action: "'.ROOT_URL.'vendor/mouf/html.widgets.fileuploaderwidget/src/direct/upload.php",
-		params: '.json_encode($scriptDataArray);
+		action: "'.ROOT_URL.'vendor/mouf/html.widgets.fileuploaderwidget/src/direct/upload.php",';
+		if($this->textDefault) {
+			$html .= 'textDefault: "'.$this->textDefault.'",';
+		}
+		if($this->textHover) {
+			$html .= 'textHover: "'.$this->textHover.'",';
+		}
+		if($this->textCancel) {
+			$html .= 'textCancel: "'.$this->textCancel.'",';
+		}
+		if($this->textFailed) {
+			$html .= 'textFailed: "'.$this->textFailed.'",';
+		}
+		$html .= 'params: '.json_encode($scriptDataArray);
 		foreach ($fileUploaderParam as $key => $value) {
 			$html .= ','.$key.':'.$value;
 		}
