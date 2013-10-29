@@ -30,6 +30,8 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 
 	/**
 	 * Activate it if you want only one file in the upload.
+	 * If you want to send only 1 file (many by default). This delete the file contain in the destination folder to store only one.
+	 * Note: it's not a graphic parameter;
 	 *
 	 * @Property
 	 * @var bool

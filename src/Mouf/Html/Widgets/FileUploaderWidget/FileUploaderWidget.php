@@ -96,6 +96,8 @@ class FileUploaderWidget implements HtmlElementInterface {
 	
 	/**
 	 * Enable or disabled the multiple file upload.
+	 * Authorize the user to send many file in 1 time (by drag & drop or explorer).
+	 * Note: It's only a graphic parameter.
 	 * 
 	 * @Property
 	 * @var boolean
