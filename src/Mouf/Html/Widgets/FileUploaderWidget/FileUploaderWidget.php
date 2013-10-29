@@ -9,6 +9,8 @@ namespace Mouf\Html\Widgets\FileUploaderWidget;
 use Mouf\MoufManager;
 
 use Mouf\Html\HtmlElement\HtmlElementInterface;
+use Mouf\Utils\Value\ValueUtils;
+use Mouf\Utils\Value\ValueInterface;
 
 class FileUploaderWidget implements HtmlElementInterface {
 		
@@ -182,7 +184,7 @@ class FileUploaderWidget implements HtmlElementInterface {
 	 * Text display by default on the file upload buttom
 	 *
 	 * @Property
-	 * @var string
+	 * @var string|ValueInterface
 	 */
 	public $textDefault;
 
@@ -190,7 +192,7 @@ class FileUploaderWidget implements HtmlElementInterface {
 	 * Text display on hover of the file upload buttom
 	 *
 	 * @Property
-	 * @var string
+	 * @var string|ValueInterface
 	 */
 	public $textHover;
 
@@ -198,7 +200,7 @@ class FileUploaderWidget implements HtmlElementInterface {
 	 * Text display to cancel the upload
 	 *
 	 * @Property
-	 * @var string
+	 * @var string|ValueInterface
 	 */
 	public $textCancel;
 
@@ -206,7 +208,7 @@ class FileUploaderWidget implements HtmlElementInterface {
 	 * Text display when the file failed
 	 *
 	 * @Property
-	 * @var string
+	 * @var string|ValueInterface
 	 */
 	public $textFailed;
 	
@@ -293,16 +295,16 @@ class FileUploaderWidget implements HtmlElementInterface {
 		element: document.getElementById("'.plainstring_to_htmlprotected($id).'"),
 		action: "'.ROOT_URL.'vendor/mouf/html.widgets.fileuploaderwidget/src/direct/upload.php",';
 		if($this->textDefault) {
-			$html .= 'textDefault: "'.$this->textDefault.'",';
+			$html .= 'textDefault: "'.ValueUtils::val($this->textDefault).'",';
 		}
 		if($this->textHover) {
-			$html .= 'textHover: "'.$this->textHover.'",';
+			$html .= 'textHover: "'.ValueUtils::val($this->textHover).'",';
 		}
 		if($this->textCancel) {
-			$html .= 'textCancel: "'.$this->textCancel.'",';
+			$html .= 'textCancel: "'.ValueUtils::val($this->textCancel).'",';
 		}
 		if($this->textFailed) {
-			$html .= 'textFailed: "'.$this->textFailed.'",';
+			$html .= 'textFailed: "'.ValueUtils::val($this->textFailed).'",';
 		}
 		$html .= 'params: '.json_encode($scriptDataArray);
 		foreach ($fileUploaderParam as $key => $value) {
