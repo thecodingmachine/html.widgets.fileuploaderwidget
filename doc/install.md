@@ -29,7 +29,8 @@ A minimal *composer.json* file might look like this:
 	            "Test": "src/"
 	        }
 	    },
-	    "minimum-stability": "dev"
+	    "prefer-stable": true,
+	    "minimum-stability": "beta"
 	}
 ```
 As explained above, FileUploader is a package of the Mouf framework. Mouf allows you (amoung other things) to visualy "build" your project's dependencies and instances.
