@@ -110,6 +110,9 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 	 * @param string $uniqueId Unique id of file uploader form.
 	 */
 	public function triggerBeforeUpload(&$targetFile, &$fileName, $fileId, array &$returnArray, $uniqueId) {
+		// Add urlencode() to protect file system encoding issues see: http://evertpot.com/filesystem-encoding-and-php/ 
+		$fileName = urlencode($fileName);
+		
 		$moufManager = MoufManager::getMoufManager();
 		$moufManager->getInstance('sessionManager')->start();
 		

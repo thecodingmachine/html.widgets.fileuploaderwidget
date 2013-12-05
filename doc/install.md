@@ -22,7 +22,7 @@ A minimal *composer.json* file might look like this:
 	{
 	    "require": {
 	        "mouf/mouf": "~2.0",
-	        "mouf/html.widgets.fileuploaderwidget": "2.0.*@dev"
+	        "mouf/html.widgets.fileuploaderwidget": "2.0.*"
 	    },
 	    "autoload": {
 	        "psr-0": {
