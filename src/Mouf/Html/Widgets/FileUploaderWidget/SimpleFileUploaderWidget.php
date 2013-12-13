@@ -110,6 +110,9 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 	 * @param string $uniqueId Unique id of file uploader form.
 	 */
 	public function triggerBeforeUpload(&$targetFile, &$fileName, $fileId, array &$returnArray, $uniqueId) {
+		// Add urlencode() to protect file system encoding issues see: http://evertpot.com/filesystem-encoding-and-php/ 
+		$fileName = urlencode($fileName);
+		
 		$moufManager = MoufManager::getMoufManager();
 		$moufManager->getInstance('sessionManager')->start();
 		
@@ -205,22 +208,30 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 		if(!is_dir($folderDest)) {
 			mkdir($folderDest, 0777, true);
 		}
+		
 		//echo $folderDest;
 		// retrieve value of input
-		if($inputName)
+		if($inputName) {
 			$values = get($inputName);
-		else
+		}
+		else {
 			$values = $temporaryFolder;
-		// if array
-		if(is_array($values)) {
-			$fileList = array();
-			// move all element in each value
-			foreach ($values as $value) {
-				$fileList = array_merge($fileList, $this->moveFileOfFolder($value, $folderDest));
+		}
+		
+		$fileList = array();
+		if($values) {
+			// if array
+			if(is_array($values)) {
+				$fileList = array();
+				// move all element in each value
+				foreach ($values as $value) {
+					$fileList = array_merge($fileList, $this->moveFileOfFolder($value, $folderDest));
+				}
+			}
+			else {
+				$fileList = $this->moveFileOfFolder($values, $folderDest);
 			}
 		}
-		else
-			$fileList = $this->moveFileOfFolder($values, $folderDest);
 		return $fileList;
 	}
 	

@@ -83,3 +83,9 @@ In afterUpload you could move your file with the function moveFileWithoutSave. T
 ```
 	$this->fileUpload->moveFileWithoutSave();
 ```
+
+A quick note about file encoding
+-----------------------
+If a user tries to input non-latin character in the uploaded file name, the file name will be URL-encoded before being
+stored on the server's disk. This is because all file systems do not support the same character sets. By URL-encoding the
+file name, we make sure the file name can be read on any operating system.
