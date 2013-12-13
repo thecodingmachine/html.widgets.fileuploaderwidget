@@ -81,7 +81,8 @@ if(!$fileName) {
 
 $continue = $instance->triggerBeforeUpload($targetFile, $fileName, $sessArray["fileId"], $returnArray, $uniqueId);
 if($continue === false) {
-	$returnArray['error'] = 'Cancel by Trigger before upload';
+	$returnArray['success'] = null;
+	$returnArray['info'] = 'Cancel by Trigger before upload';
 	echo htmlspecialchars(json_encode($returnArray), ENT_NOQUOTES);
 	exit();
 }

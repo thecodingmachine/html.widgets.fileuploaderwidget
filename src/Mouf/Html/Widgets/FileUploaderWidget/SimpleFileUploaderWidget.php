@@ -158,7 +158,10 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 		// Add to return value in JS
 		$returnArray['targetFolder']=$folderName;
 		
-		parent::triggerBeforeUpload($targetFile, $fileName, $fileId, $returnArray, $uniqueId);
+		$result = parent::triggerBeforeUpload($targetFile, $fileName, $fileId, $returnArray, $uniqueId);
+		if($result === false) {
+			return false;
+		}
 	}
 	
 

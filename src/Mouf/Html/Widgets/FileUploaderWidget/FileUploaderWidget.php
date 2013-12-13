@@ -394,8 +394,10 @@ class FileUploaderWidget implements HtmlElementInterface {
 				/* @var $listener UploadifyOnUploadInterface */
 				$result = $listener->beforeUpload($targetFile, $fileName, $fileId, $this, $returnArray, $this->getParams($uniqueId));
 				if($result === false) {
-					$returnArray = array_merge($returnArray, $result);
 					return false;
+				}
+				if(is_array($result)) {
+					$returnArray = array_merge($returnArray, $result);
 				}
 			}
 		}
