@@ -118,7 +118,7 @@ class FileUploaderWidget implements HtmlElementInterface {
 	
 	/**
 	 * A list of instances that will be notified when an upload occurs.
-	 * To be registered, an instance should implement the UploadifyOnUpoadInterface interface.
+	 * To be registered, an instance should implement the FileUploaderOnUploadInterface interface.
 	 * 
 	 * @Property
 	 * @var array<FileUploaderOnUploadInterface>
@@ -127,7 +127,7 @@ class FileUploaderWidget implements HtmlElementInterface {
 	
 	/**
 	 * A list of instances that will be notified when an upload occurs.
-	 * To be registered, an instance should implement the UploadifyOnUpoadInterface interface.
+	 * To be registered, an instance should implement the FileUploaderOnUploadInterface interface.
 	 * 
 	 * @Property
 	 * @var array<FileUploaderOnUploadInterface>
@@ -392,7 +392,7 @@ class FileUploaderWidget implements HtmlElementInterface {
 		if (is_array($this->listenersBefore)) {
 			foreach ($this->listenersBefore as $listener) {
 				/* @var $listener UploadifyOnUploadInterface */
-				$result = $this->beforeUpload($targetFile, $fileName, $fileId, $this, $returnArray, $this->getParams($uniqueId));
+				$result = $listener->beforeUpload($targetFile, $fileName, $fileId, $this, $returnArray, $this->getParams($uniqueId));
 				if($result === false) {
 					$returnArray = array_merge($returnArray, $result);
 					return false;
