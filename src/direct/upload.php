@@ -79,7 +79,12 @@ if(!$fileName) {
 /* @var $instance FileUploaderWidget */
 // Call listener Before
 
-$instance->triggerBeforeUpload($targetFile, $fileName, $sessArray["fileId"], $returnArray, $uniqueId);
+$continue = $instance->triggerBeforeUpload($targetFile, $fileName, $sessArray["fileId"], $returnArray, $uniqueId);
+if($continue === false) {
+	$returnArray['error'] = 'Cancel by Trigger before upload';
+	echo htmlspecialchars(json_encode($returnArray), ENT_NOQUOTES);
+	exit();
+}
 
 if (!is_dir($targetFile)) {
 	mkdir(str_replace('//','/', $targetFile), 0755, true);

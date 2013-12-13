@@ -395,10 +395,11 @@ class FileUploaderWidget implements HtmlElementInterface {
 				$result = $this->beforeUpload($targetFile, $fileName, $fileId, $this, $returnArray, $this->getParams($uniqueId));
 				if($result === false) {
 					$returnArray = array_merge($returnArray, $result);
-					break;
+					return false;
 				}
 			}
 		}
+		return true;
 	}
 	
 	/**
