@@ -37,7 +37,7 @@ if (empty($sessArray['instanceName'])) {
 }
 $instance = $moufManager->getInstance($sessArray['instanceName']);
 
-if(!is_array($_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId])){
+if(!isset($_SESSION["mouf_fileupload_autorizeduploads"]) || !is_array($_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId])){
 	$returnArray['error'] = 'session error';
 	echo json_encode($returnArray);
 	exit;
