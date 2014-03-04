@@ -229,6 +229,16 @@ class FileUploaderWidget implements HtmlElementInterface {
 		echo $this->returnHtmlString();
 	}
 	
+	/**
+	 * @var array<string, string>
+	 */
+	public $inlineStyles = array("float" =>"left", "margin-right" => "20px");
+	
+	/**
+	 * @var bool
+	 */
+	public $useInlineStyles = true;
+	
 	
 	/**
 	 * Return an HTML string to render the object
@@ -238,8 +248,15 @@ class FileUploaderWidget implements HtmlElementInterface {
 		self::$count++;
 		$id = "mouf_fileupload_".self::$count;
 	
+		//Parse InlineStyles
+		$styles = "";
+		if ($this->useInlineStyles){
+			foreach ($this->inlineStyles as $attribute => $value){
+				$styles .= $attribute.": ".$value."; ";
+			}
+		}
 	
-		$html = '<div id="'.plainstring_to_htmlprotected($id).'" style="float: left; margin-right: 20px">
+		$html = '<div id="'.plainstring_to_htmlprotected($id).'" style="'.$styles.'">
 		<noscript><p>Please enable JavaScript to use file uploader.</p></noscript>
 		</div>';
 	
