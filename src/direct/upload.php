@@ -61,6 +61,8 @@ $returnArray = array('success'=>'true');
 $allowedExtensions = json_decode($instance->fileExtensions);
 if(!$allowedExtensions) {
 	$allowedExtensions = array();
+}if (!is_array($allowedExtensions)){
+	$allowedExtensions = array($allowedExtensions);
 }
 // max file size in bytes
 $sizeLimit = $instance->sizeLimit;
