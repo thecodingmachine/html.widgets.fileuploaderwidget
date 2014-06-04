@@ -29,6 +29,15 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 	public $inputName;
 
 	/**
+	 * Classes of hidden input to retrieve files
+	 * It's interesting to 
+	 *
+	 * @Property
+	 * @var string
+	 */	
+	private $inputClasses = '';
+
+	/**
 	 * Activate it if you want only one file in the upload.
 	 * If you want to send only 1 file (many by default). This delete the file contain in the destination folder to store only one.
 	 * Note: it's not a graphic parameter;
@@ -46,6 +55,33 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 	 */
 	public $noTemporarySave = false;
 	
+	/**
+	 * Getter
+	 * @return string
+	 */
+	public function getInputClasses() {
+		return $this->inputClasses;
+	}
+	
+	/**
+	 * Set one classes
+	 * @param array $inputClasses
+	 * @return \Mouf\Html\Widgets\FileUploaderWidget\SimpleFileUploaderWidget
+	 */
+	public function setInputClasses(array $inputClasses) {
+		$this->inputClasses = implode(' ', $inputClasses);
+		return $this;
+	}
+
+	/**
+	 * Set one class
+	 * @param string $inputClass
+	 * @return \Mouf\Html\Widgets\FileUploaderWidget\SimpleFileUploaderWidget
+	 */
+	public function setInputClass($inputClass) {
+		$this->inputClasses .= ' '.$inputClass;
+		return $this;
+	}
 	/**
 	 * Renders the object in HTML.
 	 * The Html is echoed directly into the output.
@@ -90,7 +126,7 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 			$this->onSubmit = 'simpleFileUploadWidgetOnSubmit_'.$this->inputName.'_'.$count;
 	
 		// Add hidden input
-		$html .= '<input type="hidden" name="'.$this->inputName.'" value="" id ="'.$this->inputName.'" />';
+		$html .= '<input type="hidden" name="'.$this->inputName.'" value="" id="'.$this->inputName.'" class="'.$this->inputClasses.'" />';
 	
 		// Save parameters to retrieve data in ajax call back
 		$this->addParams(array('input' => $this->inputName, 'random' => time().rand(1,9999999), 'onlyOneFile' => $this->onlyOneFile));
@@ -335,5 +371,7 @@ class SimpleFileUploaderWidget extends FileUploaderWidget {
 			return false;
 		return $fileList;
 	}
+	
+	
 }
 ?>
