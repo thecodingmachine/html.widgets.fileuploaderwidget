@@ -276,15 +276,20 @@ class FileUploaderWidget implements HtmlElementInterface {
 			
 		$fileUploaderParam = array();
 		if($this->fileExtensions) {
-			$exts = explode(',', $this->fileExtensions);
-			$extensions = '';
-			foreach ($exts as $ext) {
-				if($extensions != '') {
-					$extensions .= ',';
+			if(strpos($this->fileExtensions, '"') === false) {
+				$exts = explode(',', $this->fileExtensions);
+				$extensions = '';
+				foreach ($exts as $ext) {
+					if($extensions != '') {
+						$extensions .= ',';
+					}
+					$extensions .= '"'.$ext.'"';
 				}
-				$extensions .= '"'.$ext.'"';
+				$fileUploaderParam['allowedExtensions'] = '['.$extensions.']';
 			}
-			$fileUploaderParam['allowedExtensions'] = '['.$extensions.']';
+			else {
+				$fileUploaderParam['allowedExtensions'] = '['.$this->fileExtensions.']';
+			}
 		}
 		if($this->multiple)
 			$fileUploaderParam['multiple'] = 'true';
