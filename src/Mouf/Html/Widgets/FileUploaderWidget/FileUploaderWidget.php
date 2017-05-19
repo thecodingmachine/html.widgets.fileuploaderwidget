@@ -268,7 +268,6 @@ class FileUploaderWidget implements HtmlElementInterface {
 		$thisInstanceName = $moufManager->findInstanceName($this);
 	
 		$scriptDataArray = array("uniqueId"=>$uniqueId,
-				"path" =>$this->getFileUploadPath(),
 				"fileId" =>$this->fileId,
 				"instanceName" =>$thisInstanceName);
 		if($this->fileName)
