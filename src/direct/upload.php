@@ -13,7 +13,7 @@ $moufManager->getInstance('sessionManager')->start();
 
 $uniqueId = $_REQUEST['uniqueId'];
 
-$sessArray = array("path"=>$_REQUEST['path'],
+$sessArray = array(
 		"fileId"=>$_REQUEST['fileId'],
 		"instanceName"=>$_REQUEST['instanceName']);
 
@@ -22,7 +22,7 @@ foreach ($sessArray as $key => $value) {
 		$sessArray[$key] = null;
 }
 
-$targetFile = $sessArray["path"];
+$instance = $moufManager->getInstance($sessArray['instanceName']);
 
 $fileName = '';
 if(isset($_REQUEST['fileName'])) {
@@ -35,7 +35,6 @@ if (empty($sessArray['instanceName'])) {
 	echo json_encode($returnArray);
 	exit;
 }
-$instance = $moufManager->getInstance($sessArray['instanceName']);
 
 if(!isset($_SESSION["mouf_fileupload_autorizeduploads"]) || !is_array($_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId])){
 	$returnArray['error'] = 'session error';
@@ -52,6 +51,8 @@ foreach ($sessArray as $key => $value) {
 		exit;
 	}
 }
+
+$targetFile = $_SESSION["mouf_fileupload_autorizeduploads"][$uniqueId]['path'];
 
 $targetPath = dirname($targetFile);
 
