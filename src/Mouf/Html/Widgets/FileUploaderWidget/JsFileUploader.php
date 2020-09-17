@@ -46,6 +46,7 @@ class JsFileUploader {
     private function toBytes($str){
         $val = trim($str);
         $last = strtolower($str[strlen($str)-1]);
+        $val = (int) $val;
         switch($last) {
             case 'g': $val *= 1024;
             case 'm': $val *= 1024;
